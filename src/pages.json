@@ -1,0 +1,83 @@
+{
+    "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+			"path": "pages/home/monitoringCenter",
+			"style": {
+                // #ifdef H5
+                "navigationStyle": "custom",
+				// #endif
+                "navigationBarTitleText": "监控中心"
+			}
+        },
+        {
+			"path": "pages/home/alarmCenter",
+			"style": {
+                // #ifdef H5
+                "navigationStyle": "custom",
+				// #endif
+                "navigationBarTitleText": "告警中心"
+			}
+        },
+        {
+			"path": "pages/home/my",
+			"style": {
+                // #ifdef H5
+                "navigationStyle": "custom",
+				// #endif
+                "navigationBarTitleText": "个人中心"
+			}
+        },
+        {
+			"path": "pages/trajectoryPlayBack",
+			"style": {
+                // #ifdef H5
+                "navigationStyle": "custom",
+				// #endif
+                "navigationBarTitleText": "轨迹回放"
+			}
+        },
+        {
+			"path": "pages/login",
+			"style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "登录"
+			}
+		}
+    ],
+    "subPackages": [],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "小程序",
+		"navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+		"color": "#333333",
+		"selectedColor": "#299ff7",
+        "backgroundColor": "#FFFFFF",
+		"list": [
+			{
+				"pagePath": "pages/home/monitoringCenter",
+				"text": "监控中心",
+				"iconPath": "static/image/diannao@2x-i.png",
+				"selectedIconPath": "static/image/diannao@2x.png"
+			},
+			{
+				"pagePath": "pages/home/alarmCenter",
+				"text": "告警中心",
+				"iconPath": "static/image/jinggaozhongxin@2x-i.png",
+				"selectedIconPath": "static/image/jinggaozhongxin@2x.png"
+			},
+			{
+				"pagePath": "pages/home/my",
+				"text": "个人中心",
+				"iconPath": "static/image/ren-3@2x-i.png",
+				"selectedIconPath": "static/image/ren-3@2x.png"
+			}
+		]
+	},
+    "easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
+		"autoscan": false
+	}
+}
