@@ -12,6 +12,7 @@
             :show-location="false"
             @updated="mapLoad = false"
             @markertap="markertap"
+            @labeltap="markertap"
         >
             <cover-view v-if="mapLoad" class="map-load flex-box align-center justify-center">地图加载中</cover-view>
 
@@ -62,6 +63,7 @@
                 iconPath: require('@/assets/image/bule@2x.png'),
                 width: 22,
                 height: 28,
+                zIndex: 3,
                 label: {
                     content: item.wcardName,
                     color: '#ffffff',

@@ -163,23 +163,30 @@
                     //     {latitude: '39.90691508288556', longitude: '116.43068779919432'},
                     //     {latitude: '39.90754055687543', longitude: '116.43600930187986'},
                     // ],
-                    strokeColor: '#000000',
+                    strokeColor: '#f1d0d070',
                     fillColor: '#f1d0d070',
                     strokeWidth: 0,
                     zIndex: 0
                 }]);
                 setTimeout(() => {
                     // console.log(this.mapContext);
-                    list.length && this.mapContext && this.mapContext.includePoints({
-                        points: list,
-                        padding: [50, 50, 50, 50],
-                    });
+                    if (list.length) {
+                        this.mapContext!.includePoints({
+                            points: list,
+                            padding: [50, 50, 50, 50],
+                            success () {
+                                utils.hideLoad();
+                            }
+                        });
+                    } else {
+                        utils.hideLoad();
+                        utils.toast('没有设置范围');
+                    }
                 }, 0);
             } catch (error) {
-
+                utils.hideLoad();
             }
 
-            utils.hideLoad();
         }
 
         created () {}
@@ -191,11 +198,18 @@
             params.equImei = options.equImei;
             params.beginTime = day[0];
             params.endTime = day[1];
-            this.getData();
         }
 
-        mounted () {
-            this.mapContext = wx.createMapContext('zMap');
+        onShow () {
+            utils.showLoad();
+            // this.$nextTick(() => {
+            //     this.mapContext = wx.createMapContext('zMap');
+            //     this.getData();
+            // });
+            setTimeout(() => {
+                this.mapContext = wx.createMapContext('zMap');
+                this.getData();
+            }, 2000);
         }
     }
 </script>
