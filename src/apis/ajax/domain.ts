@@ -2,9 +2,9 @@
 
 
 let apiServer: IApiServer = {
-    baseApi: 'http://47.112.179.19:8877'
+    baseApi: ''
 };
-
+apiServer = globalConfig.DEN_DOMAIN;
 
 
 // #ifdef MP-WEIXIN

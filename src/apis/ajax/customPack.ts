@@ -43,12 +43,16 @@ const ajax1 = async (url: string, params: IOBJ, options: IMyOptions) => {
 
     !utils.zEmpty(options.sleep) && await utils.sleep(options.sleep);
 
+    console.warn('请求', {url, params});
+
     return get(url, params, options).finally(() => {
         if (isLoad) utils.hideLoad();
     }).then((res) => {
+        console.warn('回调', {url, params, res});
         return res;
     }).catch((err) => {
-        console.error(err);
+        // console.error(err);
+        console.warn('回调报错', {url, params, err});
         if (
             !coerceCloseErrorTips &&
             (!closeErrorTips || err.type === 'catchError')

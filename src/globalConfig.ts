@@ -2,13 +2,20 @@
 // export const APPID = 'wx731132986c4006ab';
 
 // 测试
+export const DEN_DOMAIN = {
+    // baseApi: 'http://47.112.179.19:8877',
+    // baseApi: 'http://ecard.eacher-iot.com',
+    baseApi: 'https://port.eacher-iot.com:8877',
+};
+
+// 测试
 export const TEST_DOMAIN = {
-    baseApi: 'http://apptest.gdsnkzxyy.cn',
+    baseApi: 'https://port.eacher-iot.com:8877',
 };
 
 // 正式
 export const BUILD_DOMAIN = {
-    baseApi: 'http://app.gdsnkzxyy.cn',
+    baseApi: 'https://port.eacher-iot.com:8877',
 };
 
 // 首页的几个路径
