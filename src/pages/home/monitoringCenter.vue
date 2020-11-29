@@ -16,7 +16,7 @@
         >
             <cover-view v-if="mapLoad" class="map-load flex-box align-center justify-center">地图加载中</cover-view>
 
-            <cover-image v-if="!mapLoad" class="search-img fixed" :src="require('@/assets/image/fangdajing-@2x.png')" @tap="show = true"></cover-image>
+            <cover-image v-if="!mapLoad && searchShow" class="search-img fixed" :src="require('@/assets/image/fangdajing-@2x.png')" @tap="show = true"></cover-image>
 
             <!-- <template slot="callout">
                 <cover-view v-for="(item, index) in markers" :key="index" :marker-id="item.id" class="custom-callout">123</cover-view>
@@ -49,11 +49,18 @@
         mainLonAndLat = ['22.543567787553293', '114.06527985546873'];
         scale = 14;
         mapLoad = true;
-        show = false;
+        show = true;
         deptData: IOBJ[] = [];
         deptDefaultVal = 0;
         mapContext: IOBJ | null = null;
         markers: IOBJ[] = [];
+
+        get searchShow () {
+            const classify = this.show;
+            const trackWin = this.$refs.trackWin ? (this.$refs.trackWin as IOBJ).show : false;
+            // console.log(trackWin);
+            return classify ? !classify : !trackWin;
+        }
 
         markertap (e: IOBJ) {
             const index = e.detail.markerId;
@@ -169,6 +176,9 @@
 
         mounted () {
             this.mapContext = wx.createMapContext('zMap');
+            setTimeout(() => {
+                this.show = false;
+            }, 0);
         }
     }
 </script>

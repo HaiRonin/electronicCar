@@ -58,7 +58,9 @@ const ajax1 = async (url: string, params: IOBJ, options: IMyOptions) => {
             (!closeErrorTips || err.type === 'catchError')
         ) {
             // 提示
-            utils.toast(handleError(err));
+            setTimeout(() => {
+                utils.toast(handleError(err));
+            }, 0);
         }
         return Promise.reject(err);
     });
