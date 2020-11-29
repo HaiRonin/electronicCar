@@ -112,10 +112,10 @@
             // transition(mapMain);
             // markers.push(this.getMarker(mapMain, 0));
 
-            list.length && setTimeout(() => {
+            setTimeout(() => {
                 // this.scale = 14;
+                // list.length && (this.createLat = [list[0].latitude, list[0].longitude]);
                 this.markers = markers;
-                this.createLat = [list[0].latitude, list[0].longitude];
                 this.polyline = [{
                     points: list,
                     // points: [
@@ -126,7 +126,7 @@
                     color: '#D70000',
                     width: 4
                 }];
-                // this.mapContext && this.mapContext.moveToLocation({longitude: mapMain.longitude, latitude: mapMain.latitude});
+                list.length && this.mapContext && this.mapContext.moveToLocation({longitude: list[0].longitude, latitude: list[0].latitude});
             }, 0);
         }
 
@@ -189,15 +189,20 @@
 
         }
 
-        created () {}
 
         onLoad (options: IOBJ) {
             const day = this.$store.getters.day;
             const params = this.params;
             // console.log(options);
             params.equImei = options.equImei;
-            params.beginTime = day[0];
-            params.endTime = day[1];
+
+            if (options.beginTime && options.endTime) {
+                params.beginTime = options.beginTime;
+                params.endTime = options.endTime;
+            } else {
+                params.beginTime = day[0];
+                params.endTime = day[1];
+            }
         }
 
         onShow () {

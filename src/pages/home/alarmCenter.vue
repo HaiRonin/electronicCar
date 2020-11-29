@@ -4,15 +4,15 @@
         <view style="height:11rpx"></view>
 
         <view class="top-item flex-box align-center" @tap="timeShow = true">
-            <view class="text-1 flex-1">开始时间</view>
-            <view class="text-2">{{params.beginTime}}</view>
+            <view class="text-1 flex-1">告警时间段</view>
+            <view class="text-2">{{params.timeStr}}</view>
             <view class="icon-right"></view>
         </view>
-        <view class="top-item flex-box align-center" @tap="timeShow = true">
+        <!-- <view class="top-item flex-box align-center" @tap="timeShow = true">
             <view class="text-1 flex-1">结束时间</view>
             <view class="text-2">{{params.endTime}}</view>
             <view class="icon-right"></view>
-        </view>
+        </view> -->
 
         <view class="flex-box align-center title">
             <view class="col-1 flex-1">IMEI</view>
@@ -69,9 +69,17 @@
 
 
         timeChange (e: IOBJ) {
-            const myScrollView = this.$refs.myScrollView as IOBJ;
             this.params.beginTime = e.startDate;
             this.params.endTime = e.endDate;
+            this.params.timeStr = `${e.startDate} - ${e.endDate}`;
+            this.getList();
+        }
+
+        getList () {
+            const myScrollView = this.$refs.myScrollView as IOBJ;
+            const params = this.params;
+            params.beginTime = `${params.beginTime} 00:00:00`;
+            params.endTime = `${params.endTime} 23:59:59`;
             myScrollView.getList(1);
         }
 
@@ -79,6 +87,7 @@
             const day = this.$store.getters.day;
             this.params.beginTime = day[0];
             this.params.endTime = day[1];
+            this.params.timeStr = `${day[0]} - ${day[1]}`;
         }
 
         mounted () {
@@ -88,7 +97,7 @@
                     request: queryAlarm,
                     params: this.params
                 });
-                myScrollView.getList(1);
+                this.getList();
             });
         }
     }
@@ -130,7 +139,7 @@
         left: 0;
         right: 0;
         bottom: 20rpx;
-        top: 290rpx;
+        top: 190rpx;
         box-shadow: 0rpx 8rpx 18rpx 0rpx rgba(0, 0, 0, 0.29);
         border-radius: 12rpx;
         background: #fff;

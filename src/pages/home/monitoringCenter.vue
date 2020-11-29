@@ -17,9 +17,15 @@
             <cover-view v-if="mapLoad" class="map-load flex-box align-center justify-center">地图加载中</cover-view>
 
             <cover-image v-if="!mapLoad" class="search-img fixed" :src="require('@/assets/image/fangdajing-@2x.png')" @tap="show = true"></cover-image>
+
+            <!-- <template slot="callout">
+                <cover-view v-for="(item, index) in markers" :key="index" :marker-id="item.id" class="custom-callout">123</cover-view>
+            </template> -->
         </map>
 
-        <classifySelect v-model="show" :data="deptData" :defaultVal="deptDefaultVal" @change="csChange"/>
+        <!-- :defaultVal="deptDefaultVal"  -->
+        <classifySelect v-model="show" :data="deptData" @change="csChange"/>
+        <trackWin ref="trackWin"/>
     </view>
 </template>
 
@@ -28,12 +34,14 @@
     import {queryDept, queryMonitor} from '@/apis';
     import classifySelect from '@/components/classifySelect.vue';
     import transition from '@/assets/js/coordinateSystem';
+    import trackWin from '@/components/trackWin.vue';
 
     // require('@/assets/image/bule@2x.png');
 
     @Component({
         components: {
-            classifySelect
+            classifySelect,
+            trackWin
         }
     })
     export default class MonitoringCenter extends Vue {
@@ -50,8 +58,9 @@
         markertap (e: IOBJ) {
             const index = e.detail.markerId;
             const item = this.markers[index].item;
-            console.log(item);
-            utils.link(`/pages/trajectoryPlayBack?equImei=${item.equImei}`);
+            // console.log(item);
+            // utils.link(`/pages/trajectoryPlayBack?equImei=${item.equImei}`);
+            (this.$refs.trackWin as IOBJ).openFun(item);
         }
 
         getMarker (item: IOBJ, index: number) {
@@ -60,10 +69,11 @@
                 item,
                 latitude: item.latitude,
                 longitude: item.longitude,
-                iconPath: require('@/assets/image/bule@2x.png'),
+                iconPath: item.equOnline === 2 ? require('@/assets/image/red@2x.png') : require('@/assets/image/bule@2x.png'),
+                // iconPath: require('@/assets/image/red@2x.png'),
                 width: 22,
                 height: 28,
-                zIndex: 3,
+                // zIndex: 3,
                 label: {
                     content: item.wcardName,
                     color: '#ffffff',
@@ -74,7 +84,12 @@
                     bgColor: '#949494',
                     textAlign: 'center',
                     padding: 6
-                }
+                },
+                // customCallout: {
+                //     display: 'BYCLICK',
+                //     anchorY: -100,
+                //     anchorX: -50
+                // }
             };
         }
 
@@ -91,7 +106,7 @@
             }
         }
 
-        getMapData (groupId: number, isLoad = true) {
+        getMapData (groupId: number | string, isLoad = true) {
 
             // this.mapContext && this.mapContext.removeMarkers({
             //     markerIds: this.markers.map((ii: IOBJ) => ii.id)
@@ -101,6 +116,7 @@
             return queryMonitor({groupId, pageSize: 99, pageIndex: 1}, {isLoad}).then((res) => {
                 console.log(res);
 
+                res.data = res.data.filter((item: IOBJ) => item.latitude !== '0');
                 res.data.forEach((item: IOBJ, index: number) => {
                     transition(item as ICS);
 
@@ -136,7 +152,7 @@
                 const deptId = this.getDeptId(dept.data);
                 // console.log(deptId, dept.data);
 
-                await this.getMapData(deptId, false);
+                await this.getMapData('', false);
 
                 this.deptData = dept.data;
                 this.deptDefaultVal = deptId;
@@ -174,5 +190,13 @@
         bottom: 54rpx;
         left: 39rpx;
     }
+
+    // .custom-callout{
+    //     background: #000;
+    //     position: fixed;
+    //     z-index: 222;
+    //     width: 200rpx;
+    //     height: 200rpx;
+    // }
 </style>
 
