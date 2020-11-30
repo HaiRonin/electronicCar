@@ -10,7 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         appVersions: 'V 1.0版',
-        appName: '电动车告警',
+        appName: '智慧环卫',
     },
     mutations: {
     },

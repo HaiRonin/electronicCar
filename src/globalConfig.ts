@@ -5,17 +5,21 @@
 export const DEN_DOMAIN = {
     // baseApi: 'http://47.112.179.19:8877',
     // baseApi: 'http://ecard.eacher-iot.com',
-    baseApi: 'https://port.eacher-iot.com:8877',
+    // baseApi: 'https://port.eacher-iot.com:8877',
+    baseApi: 'https://m2m.eacher-iot.com:8877',
 };
 
 // 测试
 export const TEST_DOMAIN = {
-    baseApi: 'https://port.eacher-iot.com:8877',
+    // baseApi: 'https://port.eacher-iot.com:8877',
+    baseApi: 'https://m2m.eacher-iot.com:8877',
+
 };
 
 // 正式
 export const BUILD_DOMAIN = {
-    baseApi: 'https://port.eacher-iot.com:8877',
+    // baseApi: 'https://port.eacher-iot.com:8877',
+    baseApi: 'https://m2m.eacher-iot.com:8877',
 };
 
 // 首页的几个路径
