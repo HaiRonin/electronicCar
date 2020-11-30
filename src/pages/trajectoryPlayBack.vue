@@ -49,7 +49,7 @@
             ];
 
             const label = {
-                content: item.wcardName,
+                content: item.wcardName || '移动坐标',
                 color: '#ffffff',
                 fontSize: 12,
                 anchorX: 0,
@@ -68,7 +68,7 @@
                 iconPath: imgArr[index],
                 width: 22,
                 height: 28,
-                label: index === 0 ? label : undefined
+                // label: index === 0 ? label : undefined
             };
         }
 
@@ -99,6 +99,7 @@
                 transition(obj);
 
                 if (index === 0) {
+                    markers.push(this.getMarker(obj, 0));
                     markers.push(this.getMarker(obj, 1));
                 } else if (index === lastIndex) {
                     markers.push(this.getMarker(obj, 2));
@@ -106,28 +107,30 @@
 
                 return obj;
             });
-            // console.log(list);
-            // console.log(markers);
 
-            // transition(mapMain);
-            // markers.push(this.getMarker(mapMain, 0));
-
+            this.markers = markers;
             setTimeout(() => {
                 // this.scale = 14;
                 // list.length && (this.createLat = [list[0].latitude, list[0].longitude]);
-                this.markers = markers;
                 this.polyline = [{
                     points: list,
-                    // points: [
-                    //     {latitude: '39.90852813575859', longitude: '116.42781247113035'},
-                    //     {latitude: '39.90691508288556', longitude: '116.43068779919432'},
-                    //     {latitude: '39.90754055687543', longitude: '116.43600930187986'},
-                    // ],
                     color: '#D70000',
                     width: 4
                 }];
-                list.length && this.mapContext && this.mapContext.moveToLocation({longitude: list[0].longitude, latitude: list[0].latitude});
+                // list.length && this.mapContext!.moveToLocation({longitude: list[0].longitude, latitude: list[0].latitude});
+                list.length && this.mapContext!.includePoints({
+                    points: list,
+                    padding: [50, 50, 50, 50],
+                });
             }, 0);
+            list.length && setTimeout(() => {
+                this.mapContext!.moveAlong({
+                    markerId: 0,
+                    path: list,
+                    duration: 3000,
+                    autoRotate: false
+                });
+            }, 100);
         }
 
         async getData () {
@@ -136,7 +139,7 @@
             // console.log(utils.jsCopyObj(data));
             // debugger;
             try {
-                await this.getTrajectory();
+                // await this.getTrajectory();
 
                 const res = await queryIotfence(data);
                 if (!res.data.length) return;
@@ -168,6 +171,7 @@
                     strokeWidth: 0,
                     zIndex: 0
                 }]);
+
                 setTimeout(() => {
                     // console.log(this.mapContext);
                     if (list.length) {
@@ -183,6 +187,8 @@
                         utils.toast('没有设置范围');
                     }
                 }, 0);
+
+                this.getTrajectory(true);
             } catch (error) {
                 utils.hideLoad();
             }

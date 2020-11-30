@@ -20,6 +20,9 @@ Vue.mixin({
         forcedToLogin();
     },
     onShow () {
+    },
+    onShareAppMessage () {
+        return {};
     }
 });
 
