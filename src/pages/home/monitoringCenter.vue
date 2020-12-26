@@ -120,10 +120,10 @@
             // });
             this.markers = [];
 
-            return queryMonitor({groupId, pageSize: 99, pageIndex: 1}, {isLoad}).then((res) => {
+            return queryMonitor({groupId, pageSize: 999, pageIndex: 1}, {isLoad}).then((res) => {
                 console.log(res);
 
-                res.data = res.data.filter((item: IOBJ) => item.latitude !== '0');
+                res.data = res.data.list.filter((item: IOBJ) => item.latitude !== '0');
                 res.data.forEach((item: IOBJ, index: number) => {
                     transition(item as ICS);
 

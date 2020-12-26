@@ -44,7 +44,7 @@ export const trajectoryPlayBack: TApi = (params = {}, options = {}) => {
 
 // 监控中心
 export const queryMonitor: TApi = (params = {}, options = {}) => {
-    const url = '/api/v1/iotwcardByGroupId';
+    const url = '/api/v1/iotwcardByToken';
     return ajax.apiGet(url, params, options);
 };
 
